@@ -1,22 +1,21 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControlLabel,
-  Grid,
-  Link,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styles from "./LoginForm.module.css";
 import { FormEvent, useState } from "react";
+import TextBox from "../TextBox";
+import MainButton from "../MainButton";
 
 const LoginForm = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(true);
+  const [img, setImg] = useState({
+    status: 404,
+    imgURL: "",
+  });
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log(user);
@@ -26,90 +25,112 @@ const LoginForm = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  return (
-    <Container
-      className={styles.loginContainer}
-      component="main"
-      maxWidth="xs"
-      disableGutters
-    >
-      <Box>
-        <Typography
-          component="h1"
-          variant="h2"
-          fontWeight={700}
-          textAlign="center"
-          marginBottom={8}
-        >
-          Social Listener
-        </Typography>
-      </Box>
-      <Box
-        className={styles.loginBox}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
+  const fetchRandomUnsplashImage = async () => {
+    let cliendID = "vJ6nJJPMKaxLm3fhEFSdLTqvB87NmSYpV26lrsKvHxw";
+    let endpoint = `https://api.unsplash.com/photos/random/?client_id=${cliendID}`;
+    await fetch(endpoint)
+      .then(function (res) {
+        console.log(res.status);
+        if (res.status != 200) {
+          setImg({
+            ...img,
+            status: res.status,
+            imgURL: "src/assets/images/login_bg.jpg",
+          });
+          setLoading(false);
+        } else {
+          return res.json();
+        }
+      })
+      .then(function (jsonData) {
+        setImg({
+          ...img,
+          status: jsonData.status,
+          imgURL: jsonData.urls.regular,
+        });
+        // console.log(jsonData);
+        // console.log(jsonData.urls.regular);
+        // console.log(img);
+        setLoading(false);
+      });
+  };
 
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          // style={{ backgroundColor: "red" }}
-        >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={handleChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+  useState(() => {
+    fetchRandomUnsplashImage();
+  });
+
+  return loading ? (
+    <p>Loading</p>
+  ) : (
+    <div className={styles.loginPage}>
+      <div className={styles.loginContainer}>
+        <div className={styles.loginComponents}>
+          <Typography
+            variant="h6"
+            fontWeight={700}
+            textAlign="left"
+            marginBottom={4}
+            color={"#97A1B1"}
           >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+            WELCOME BACK
+          </Typography>
+          <Typography
+            variant="h3"
+            fontWeight={700}
+            textAlign="left"
+            marginBottom={6}
+            color={"white"}
+          >
+            Login to your account
+          </Typography>
+          <Typography
+            variant="body1"
+            fontWeight={400}
+            textAlign="left"
+            marginBottom={4}
+            color={"white"}
+          >
+            Don't have an account?{" "}
+            <a className={styles.signupLink} href="google.com">
+              Sign Up
+            </a>
+          </Typography>
+          <Box
+            className={styles.loginBox}
+            component="form"
+            onSubmit={handleSubmit}
+          >
+            <TextBox
+              label="Email Address"
+              required
+              fullWidth
+              name="email"
+              autoFocus
+              onChange={handleChange}
+            ></TextBox>
+            <TextBox
+              label="Password"
+              required
+              fullWidth
+              name="password"
+              type="password"
+              autoFocus
+              onChange={handleChange}
+            ></TextBox>
+            <Box height={20} />
+            <MainButton fullWidth type="submit">
+              Sign In
+            </MainButton>
+          </Box>
+        </div>
+      </div>
+      <img
+        className={styles.loginBackground}
+        src={img.imgURL}
+        alt="Login Background"
+        // height="100%"
+      ></img>
+    </div>
   );
 };
 

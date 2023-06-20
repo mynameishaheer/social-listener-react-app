@@ -1,14 +1,40 @@
 .loginContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: start;
+    padding-left: 8vw;
+    align-items: center;
+    height: 100vh;
+    width: 30vw;
 }
 
+.loginComponents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
 
 .loginBox {
-    padding: 50px;
-    background-color: #FCFCFC;
     border-radius: 10px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+}
+
+.signupLink {
+    color: #BDE460;
+    text-decoration: underline;
+}
+
+.loginPage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loginBackground {
+    background-color: #323644;
+    height: 100vh;
+    min-width: 55vw;
+    max-width: 55vw;
+    object-fit: cover;
+    -webkit-mask-image: -webkit-gradient(linear, right center, left center, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
 }
