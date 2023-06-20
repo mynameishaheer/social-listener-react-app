@@ -1,0 +1,25 @@
+.removeBorder {
+    border: none !important;
+}
+
+.root {
+    color: white;
+}
+
+.textfieldContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #323644;
+    padding: 12px 6px;
+    padding-top: 20px;
+    padding-right: 25px;
+    border-radius: 12px;
+    margin: 30px 0px;
+    min-width: 300px;
+}
+
+.icon {
+    color: #C4C4C4;
+}
