@@ -62,9 +62,9 @@ const LoginForm = () => {
   return loading ? (
     <p>Loading</p>
   ) : (
-    <div className={styles.loginPage}>
-      <div className={styles.loginContainer}>
-        <div className={styles.loginComponents}>
+    <Box className={styles.loginPage}>
+      <Box className={styles.loginContainer}>
+        <Box className={styles.loginComponents}>
           <Typography
             variant="h6"
             fontWeight={700}
@@ -122,15 +122,17 @@ const LoginForm = () => {
               Sign In
             </MainButton>
           </Box>
-        </div>
-      </div>
-      <img
-        className={styles.loginBackground}
-        src={img.imgURL}
-        alt="Login Background"
-        // height="100%"
-      ></img>
-    </div>
+        </Box>
+      </Box>
+      <Box display={{ xs: "none", md: "block" }}>
+        <img
+          className={styles.loginBackground}
+          src={img.imgURL}
+          alt="Login Background"
+          // height="100%"
+        ></img>
+      </Box>
+    </Box>
   );
 };
 
