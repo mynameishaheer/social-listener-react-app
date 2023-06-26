@@ -1,0 +1,10 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    /* max-height: 62.5vh */
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}

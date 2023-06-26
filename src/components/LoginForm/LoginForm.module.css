@@ -1,21 +1,6 @@
-.loginContainer {
-    display: flex;
-    justify-content: start;
-    padding-left: 7vw;
-    align-items: center;
-    height: 100vh;
-    width: 30vw;
-}
-
-.loginComponents {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.login {
     width: 100%;
-}
-
-.loginBox {
-    border-radius: 10px;
+    padding: 80px;
 }
 
 .signupLink {
@@ -23,18 +8,26 @@
     text-decoration: underline;
 }
 
-.loginPage {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.loginBackground {
+.loginImage {
     background-color: #323644;
-    height: 100vh;
     min-width: 55vw;
     max-width: 55vw;
     object-fit: cover;
+    /* margin: 0px; */
     -webkit-mask-image: -webkit-gradient(linear, right center, left center, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
     mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
+}
+
+.error {
+    background-color: #E46060;
+    color: white;
+    font-size: 12px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+@media (max-width: 1000px) {
+    .loginImage {
+        display: none;
+    }
 }

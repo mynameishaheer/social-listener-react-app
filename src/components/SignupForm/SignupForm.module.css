@@ -1,0 +1,33 @@
+.signup {
+    width: 100%;
+    padding: 60px 70px;
+}
+
+.signupLink {
+    color: #BDE460;
+    text-decoration: underline;
+}
+
+.signupImage {
+    background-color: #323644;
+    min-width: 55vw;
+    max-width: 55vw;
+    object-fit: cover;
+    /* margin: 0px; */
+    -webkit-mask-image: -webkit-gradient(linear, right center, left center, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
+}
+
+.error {
+    background-color: #E46060;
+    color: white;
+    font-size: 12px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+@media (max-width: 1000px) {
+    .loginImage {
+        display: none;
+    }
+}
