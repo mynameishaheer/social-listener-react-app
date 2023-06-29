@@ -10,7 +10,7 @@
     width: 100%;
     transition: border-color 0.25s;
     min-width: 330px;
-
+    color: #323644;
 }
 
 .button:hover {

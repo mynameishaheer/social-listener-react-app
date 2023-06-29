@@ -1,23 +1,24 @@
 import { Box, Typography, ThemeProvider, createTheme } from "@mui/material";
-import styles from "./LoginForm.module.css";
+import styles from "./SignupForm.module.css";
 import { FormEvent, useState } from "react";
-import TextBox from "../TextBox";
-import MainButton from "../MainButton";
-import { Column, Row } from "../Layouts";
-import Loader from "../Loader";
+import TextBox from "../../TextBox";
+import MainButton from "../../MainButton";
+import { Column, Row } from "../../Layouts";
+import Loader from "../../Loader";
 
-const LoginForm = () => {
-  const test = true;
+const SignupForm = () => {
   const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [img, setImg] = useState({
     status: 404,
     imgURL: "",
   });
-  const [error, setError] = useState(false);
   const [emailValid, setEmailValid] = useState({
     error: false,
     helperText: "",
@@ -28,6 +29,7 @@ const LoginForm = () => {
   });
 
   const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
     let emailValid = false;
     let passValid = false;
     event.preventDefault();
@@ -49,41 +51,15 @@ const LoginForm = () => {
         (loggingUser) => loggingUser.email === user.email
       );
       if (userIndex === -1) {
-        setError(true);
-      } else {
         setError(false);
+      } else {
+        setError(true);
       }
     }
   };
 
   const handleChange = (e: any) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const fetchRandomUnsplashImage = async () => {
-    let cliendID = "2g17BB_SfWwrj7eH6iPzyZIKQZK9qCN4Np4RLUdIJ_c";
-    let endpoint = `https://api.unsplash.com/photos/random/?client_id=${cliendID}`;
-    await fetch(endpoint)
-      .then(function (res) {
-        if (res.status != 200) {
-          setImg({
-            ...img,
-            status: res.status,
-            imgURL: "src/assets/images/login_bg.jpg",
-          });
-          setLoading(false);
-        } else {
-          return res.json();
-        }
-      })
-      .then(function (jsonData) {
-        setImg({
-          ...img,
-          status: jsonData.status,
-          imgURL: jsonData.urls.regular,
-        });
-        setLoading(false);
-      });
   };
 
   const validatePassword = () => {
@@ -116,18 +92,44 @@ const LoginForm = () => {
     return false;
   };
 
+  const fetchRandomUnsplashImage = async () => {
+    let cliendID = "2g17BB_SfWwrj7eH6iPzyZIKQZK9qCN4Np4RLUdIJ_c";
+    let endpoint = `https://api.unsplash.com/photos/random/?client_id=${cliendID}`;
+    await fetch(endpoint)
+      .then(function (res) {
+        if (res.status != 200) {
+          setImg({
+            ...img,
+            status: res.status,
+            imgURL: "src/assets/images/login_bg.jpg",
+          });
+          setLoading(false);
+        } else {
+          return res.json();
+        }
+      })
+      .then(function (jsonData) {
+        setImg({
+          ...img,
+          status: jsonData.status,
+          imgURL: jsonData.urls.regular,
+        });
+        setLoading(false);
+      });
+  };
+
   useState(() => {
     fetchRandomUnsplashImage();
   });
 
   const theme = createTheme();
 
-  return test ? (
+  return loading ? (
     <Loader />
   ) : (
     <ThemeProvider theme={theme}>
       <Row justifyContent="space-between" alignItems="center">
-        <div className={styles.login}>
+        <div className={styles.signup}>
           <form onSubmit={handleSubmit}>
             <Column justifyContent="start" alignItems="start">
               <Typography
@@ -137,17 +139,28 @@ const LoginForm = () => {
                 marginBottom={3}
                 color={"#97A1B1"}
               >
-                WELCOME BACK
+                JOIN FOR FREE
               </Typography>
-              <Typography
-                variant="h3"
-                fontWeight={700}
-                textAlign="left"
-                marginBottom={5}
-                color={"white"}
-              >
-                Login to your account
-              </Typography>
+              <Row alignItems="center" justifyContent="start">
+                <Typography
+                  variant="h3"
+                  fontWeight={700}
+                  textAlign="left"
+                  marginBottom={5}
+                  color={"white"}
+                >
+                  Create your account now
+                </Typography>
+                <Typography
+                  variant="h3"
+                  fontWeight={700}
+                  textAlign="left"
+                  marginBottom={5}
+                  color={"#BDE460"}
+                >
+                  .
+                </Typography>
+              </Row>
               <Typography
                 variant="body1"
                 fontWeight={400}
@@ -155,9 +168,9 @@ const LoginForm = () => {
                 marginBottom={3}
                 color={"white"}
               >
-                Don't have an account?{" "}
-                <a className={styles.signupLink} href="signup">
-                  Sign Up
+                Already have an account?{" "}
+                <a className={styles.signupLink} href="login">
+                  Login
                 </a>
               </Typography>
               {error && (
@@ -169,10 +182,28 @@ const LoginForm = () => {
                     paddingBottom={1}
                     paddingLeft={2}
                   >
-                    Invalid Credentials
+                    User already exists
                   </Typography>
                 </div>
               )}
+              <Row alignItems="center" justifyContent="space-evenly" gap="40px">
+                <TextBox
+                  label="First Name"
+                  required
+                  fullWidth
+                  name="firstname"
+                  autoFocus
+                  onChange={handleChange}
+                ></TextBox>
+                <TextBox
+                  label="Last Name"
+                  required
+                  fullWidth
+                  name="lastname"
+                  autoFocus
+                  onChange={handleChange}
+                ></TextBox>
+              </Row>
               <TextBox
                 label="Email Address"
                 required
@@ -180,7 +211,6 @@ const LoginForm = () => {
                 name="email"
                 autoFocus
                 onChange={handleChange}
-                autocomplete="email"
                 error={emailValid.error}
                 helperText={emailValid.helperText}
               ></TextBox>
@@ -192,7 +222,6 @@ const LoginForm = () => {
                 type="password"
                 autoFocus
                 onChange={handleChange}
-                autocomplete="current-password"
                 error={passwordValid.error}
                 helperText={passwordValid.helperText}
               ></TextBox>
@@ -213,9 +242,9 @@ const LoginForm = () => {
           }}
         >
           <img
-            className={styles.loginImage}
+            className={styles.signupImage}
             src={img.imgURL}
-            alt="Login Background"
+            alt="Signup Background"
             height="100%"
           ></img>
         </Box>
@@ -225,4 +254,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;
