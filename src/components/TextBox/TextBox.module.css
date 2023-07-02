@@ -3,12 +3,27 @@
 
 }
 
-
-
-.root {
+/* Add this CSS code */
+.textfieldContainer input:-webkit-autofill::first-line {
     color: white;
-
 }
+
+.textfieldContainer input:-webkit-autofill {
+    -webkit-text-fill-color: white;
+    border-radius: 0px;
+    box-shadow: 0 0 0px 1000px #323644 inset;
+}
+
+.textfieldContainer input::placeholder {
+    color: white;
+    opacity: 0.7;
+}
+
+.textfieldContainer input::-webkit-input-placeholder {
+    color: white;
+    opacity: 0.7;
+}
+
 
 .textfieldBackground {
     background-color: #323644;
